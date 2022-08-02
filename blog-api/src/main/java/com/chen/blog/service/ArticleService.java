@@ -1,5 +1,6 @@
 package com.chen.blog.service;
 
+import com.chen.blog.vo.ArticleVo;
 import com.chen.blog.vo.Result;
 import com.chen.blog.vo.params.PageParams;
 
@@ -31,4 +32,11 @@ public interface ArticleService {
      * @return
      */
     Result listArchives();
+
+    /**
+     * 查看文章详情
+     * @param articleId
+     * @return
+     */
+    Result findArticleById(Long articleId);
 }

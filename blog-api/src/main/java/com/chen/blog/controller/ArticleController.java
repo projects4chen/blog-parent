@@ -1,13 +1,11 @@
 package com.chen.blog.controller;
 
 import com.chen.blog.service.ArticleService;
+import com.chen.blog.vo.ArticleVo;
 import com.chen.blog.vo.Result;
 import com.chen.blog.vo.params.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 // json数据进行交互
 @RestController
@@ -50,5 +48,15 @@ public class ArticleController {
     @PostMapping("listArchives")
     public Result listArchives(){
         return articleService.listArchives();
+    }
+
+    /**
+     * 查看文章详情
+     * @param articleId
+     * @return
+     */
+    @PostMapping("view/{id}")
+    public Result findArticleById(@PathVariable("id") Long articleId) {
+        return articleService.findArticleById(articleId);
     }
 }
