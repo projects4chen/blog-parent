@@ -44,6 +44,18 @@ public class ArticleServiceImpl implements ArticleService {
         return Result.success(articleVoList);
     }
 
+    @Override
+    public Result hotArticle(int limit) {
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.orderByDesc(Article::getViewCounts);
+        queryWrapper.select(Article::getId, Article::getTitle);
+        queryWrapper.last("limit "+limit);
+        // select id, title from article order by view_counts desc limit 5
+        List<Article> articles = articleMapper.selectList(queryWrapper);
+
+        return Result.success(copyList(articles, false, false));
+    }
+
     private List<ArticleVo> copyList(List<Article> records, boolean isTag, boolean isAuthor) {
         List<ArticleVo> articleVoList = new ArrayList<>();
         for (Article record : records) {
@@ -62,17 +74,12 @@ public class ArticleServiceImpl implements ArticleService {
             List<TagVo> tags = tagService.findTagsByArticleId(article.getId());
             articleVo.setTags(tags);
         }
-
         if (isAuthor) {
             SysUser sysUser = sysUserService.findUserById(article.getAuthorId());
             articleVo.setAuthor(sysUser.getNickname());
         }
-
-
         return articleVo;
     }
-
-
 
 
 }
