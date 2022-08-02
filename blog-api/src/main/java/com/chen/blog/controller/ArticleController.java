@@ -26,9 +26,22 @@ public class ArticleController {
 
         return articleService.listArticle(pageParams);
     }
+
+    /**
+     * 最热文章
+     * @return
+     */
     @PostMapping("hot")
     public Result hotAritcle(){
         int limit = 5;
         return articleService.hotArticle(limit);
+    }
+    /**
+     * 最新文章
+     */
+    @PostMapping("new")
+    public Result newAritcles(){
+        int limit = 5;
+        return articleService.newArticles(limit);
     }
 }
