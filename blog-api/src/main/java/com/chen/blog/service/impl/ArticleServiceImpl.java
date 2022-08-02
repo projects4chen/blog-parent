@@ -66,8 +66,10 @@ public class ArticleServiceImpl implements ArticleService {
         queryWrapper.last("limit "+limit);
         // select id, title from article order by create_date desc limit 5
         List<Article> articles = articleMapper.selectList(queryWrapper);
-
-        return Result.success(copyList(articles, false, false));
+        Result result = Result.success(copyList(articles, false, false));
+        System.out.println("here");
+        System.out.println(result);
+        return result;
     }
 
     @Override
