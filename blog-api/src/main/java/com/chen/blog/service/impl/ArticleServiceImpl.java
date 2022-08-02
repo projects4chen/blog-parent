@@ -9,10 +9,7 @@ import com.chen.blog.dao.mapper.ArticleMapper;
 import com.chen.blog.dao.pojo.Article;
 import com.chen.blog.dao.pojo.ArticleBody;
 import com.chen.blog.dao.pojo.SysUser;
-import com.chen.blog.service.ArticleService;
-import com.chen.blog.service.CategoryService;
-import com.chen.blog.service.SysUserService;
-import com.chen.blog.service.TagService;
+import com.chen.blog.service.*;
 import com.chen.blog.vo.ArticleBodyVo;
 import com.chen.blog.vo.ArticleVo;
 import com.chen.blog.vo.Result;
@@ -79,6 +76,9 @@ public class ArticleServiceImpl implements ArticleService {
         return Result.success(archivesList);
     }
 
+    @Autowired
+    private ThreadService threadService;
+
     @Override
     public Result findArticleById(Long articleId) {
         /**
@@ -87,6 +87,9 @@ public class ArticleServiceImpl implements ArticleService {
          */
         Article article = this.articleMapper.selectById(articleId);
         ArticleVo articleVo = copy(article, true, true, true, true);
+        // 查看完文章了，新增阅读数
+        // 线程池 可以把更新操作扔到线程池中去执行
+        threadService.updateArticleViewCount(articleMapper, article);
         return Result.success(articleVo);
     }
 
