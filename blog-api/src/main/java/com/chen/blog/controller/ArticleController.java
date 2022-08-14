@@ -1,5 +1,6 @@
 package com.chen.blog.controller;
 
+import com.chen.blog.common.aop.LogAnnotation;
 import com.chen.blog.service.ArticleService;
 import com.chen.blog.vo.ArticleVo;
 import com.chen.blog.vo.Result;
@@ -21,8 +22,9 @@ public class ArticleController {
      * @return
      */
     @PostMapping
+    // 加上此注解，代表要对此接口记录日志
+    @LogAnnotation(module="文章", operator="获取文章列表")
     public Result listAritcle(@RequestBody PageParams pageParams){
-
         return articleService.listArticle(pageParams);
     }
 
