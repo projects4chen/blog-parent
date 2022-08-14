@@ -2,6 +2,7 @@ package com.chen.blog.service;
 
 import com.chen.blog.vo.ArticleVo;
 import com.chen.blog.vo.Result;
+import com.chen.blog.vo.params.ArticleParam;
 import com.chen.blog.vo.params.PageParams;
 
 public interface ArticleService {
@@ -39,4 +40,11 @@ public interface ArticleService {
      * @return
      */
     Result findArticleById(Long articleId);
+
+    /**
+     * 文章发布服务
+     * @param articleParam
+     * @return
+     */
+    Result publish(ArticleParam articleParam);
 }
