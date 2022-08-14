@@ -3,6 +3,7 @@ package com.chen.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.chen.blog.dao.mapper.TagMapper;
 import com.chen.blog.dao.pojo.Article;
+import com.chen.blog.dao.pojo.Category;
 import com.chen.blog.dao.pojo.Tag;
 import com.chen.blog.service.TagService;
 import com.chen.blog.vo.ArticleVo;
@@ -59,7 +60,23 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Result findAll() {
-        List<Tag> tagList = this.tagMapper.selectList(new LambdaQueryWrapper<>());
+        LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(Tag::getId, Tag::getTagName);
+        List<Tag> tagList = this.tagMapper.selectList(queryWrapper);
         return Result.success(copyList(tagList));
     }
+
+    @Override
+    public Result findAllDetail() {
+        List<Tag> tags = tagMapper.selectList(new LambdaQueryWrapper<>());
+        //页面交互的对象
+        return Result.success(copyList(tags));
+    }
+
+    @Override
+    public Result findAllDetailById(Long id) {
+        Tag tag = tagMapper.selectById(id);
+        return Result.success(copy(tag));
+    }
+
 }
